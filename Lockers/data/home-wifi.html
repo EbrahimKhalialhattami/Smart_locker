@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Lock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        nav,
+        footer {
+            background: #fff;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #f0f0f5;
+        }
+
+        header {
+            padding: 20px;
+            text-align: left;
+            background: #fff;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            color: #fff;
+            background: #333;
+        }
+
+        .alert {
+            font-size: smaller;
+            text-align: left;
+            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid #FDDA6A;
+            color: #664d03;
+            background: #fff3cd;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h1>Smart Lock</h1>
+        <ul>
+            <li><a href="/device-wifi">Configure Device Wi-Fi</a></li>
+            <li><a href="/device-password">Change Password</a></li>
+            <li><a href="/device/update">Check Update</a></li>
+            <li><a href="/device/reboot" style="background: rgb(190, 56, 56); color: #f4f4f9;">Restart Device</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="form-container">
+            <h2>Home WiFi Configuration</h2>
+            <div class="alert">
+                <p>Please make sure you enter the correct <b>SSID</b> and <b>Password</b> of your home WiFi network. Otherwise, users will not be able to unlock the lockers.</p>
+            </div>
+            <form action="/home-wifi" method="post">
+                <input type="text" id="ssid" placeholder="SSID" name="home_ssid" />
+                <input type="password" id="password" placeholder="Password" name="home_pwd" />
+                <input type="submit" id="save-btn" value="Save & Reboot" />
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const ssid = document.getElementById("ssid");
+        const password = document.getElementById("password");
+        const saveButton = document.getElementById("save-btn");
+
+        ssid.value = localStorage.getItem("ssid");
+        password.value = localStorage.getItem("pwd");
+
+        saveButton.addEventListener("click", () => {
+            localStorage.setItem("ssid", ssid.value);
+            localStorage.setItem("pwd", password.value);
+        });
+    </script>
+</body>
+
+</html>
