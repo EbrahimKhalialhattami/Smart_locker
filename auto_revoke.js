@@ -19,6 +19,7 @@ async function checkExpiredLockers() {
     
     if (!lockers) {
       console.log("No lockers found.");
+      await admin.app().delete(); // إغلاق الاتصال
       process.exit(0);
     }
 
@@ -28,11 +29,9 @@ async function checkExpiredLockers() {
 
     for (const lockerId in lockers) {
       const locker = lockers[lockerId];
-      // التحقق إذا كانت الخزانة محجوزة وتمتلك طابعاً زمنياً
       if (locker.status !== "available" && locker.depositTimestamp) {
         const elapsed = now - locker.depositTimestamp;
         
-        // إذا تجاوز الوقت 48 ساعة
         if (elapsed >= FORTY_EIGHT_HOURS_IN_MS) {
           updates[`${lockerId}/command`] = "revoke_otp";
           console.log(`Locker ${lockerId} expired! Revoke command sent.`);
@@ -48,9 +47,12 @@ async function checkExpiredLockers() {
     }
   } catch (error) {
     console.error("Error checking lockers:", error);
+    await admin.app().delete(); // إغلاق الاتصال حتى في حال الخطأ
     process.exit(1);
   }
-  process.exit(0); // إنهاء العملية بنجاح
+  
+  await admin.app().delete(); // إغلاق الاتصال بنجاح
+  process.exit(0); // إنهاء العملية
 }
 
 checkExpiredLockers();
