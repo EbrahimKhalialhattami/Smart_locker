@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحديث النظام الهوائي - Smart Locker</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 400px; }
+        h2 { color: #333; margin-bottom: 20px; }
+        input[type="file"] { margin-bottom: 20px; width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; transition: 0.3s; }
+        button:hover { background-color: #0056b3; }
+        #status { margin-top: 15px; font-weight: bold; color: #d9534f; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>تحديث نظام الخزائن (Firmware OTA)</h2>
+        <form method='POST' action='/device/update' enctype='multipart/form-data' id="upload_form">         
+          <input type='file' name='update' accept='.bin' required>
+            <button type='submit'>بدء التحديث</button>
+        </form>
+        <div id="status"></div>
+    </div>
+    <script>
+        document.getElementById('upload_form').onsubmit = function() {
+            document.getElementById('status').innerText = "جاري التحديث، الرجاء عدم فصل الطاقة...";
+            document.querySelector('button').disabled = true;
+        };
+    </script>
+</body>
+</html>
