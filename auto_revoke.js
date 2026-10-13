@@ -1,6 +1,5 @@
 const admin = require("firebase-admin");
 
-// قراءة بيانات الاعتماد والرابط من خوادم جيت هب المشفرة
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 const databaseURL = process.env.FIREBASE_DATABASE_URL;
 
@@ -19,7 +18,7 @@ async function checkExpiredLockers() {
     
     if (!lockers) {
       console.log("No lockers found.");
-      await admin.app().delete(); // إغلاق الاتصال
+      await admin.app().delete(); 
       process.exit(0);
     }
 
@@ -47,12 +46,12 @@ async function checkExpiredLockers() {
     }
   } catch (error) {
     console.error("Error checking lockers:", error);
-    await admin.app().delete(); // إغلاق الاتصال حتى في حال الخطأ
+    await admin.app().delete(); 
     process.exit(1);
   }
   
-  await admin.app().delete(); // إغلاق الاتصال بنجاح
-  process.exit(0); // إنهاء العملية
+  await admin.app().delete(); 
+  process.exit(0); 
 }
 
 checkExpiredLockers();
